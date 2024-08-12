@@ -1,43 +1,64 @@
-import {Tenant} from '../interface/tenant';
-import {TenantModel} from '../odm/tenant-odm';
-import {NVerseEmailEncoder, NverseTenantDaoController} from 'bmx-nverse-ts';
-import {alfredLog} from 'bmx-alfred-ts';
-import {BmxQueryResponse} from '../../nverse/interface/bmx-query-response';
+import { Tenant } from '../interface/tenant';
+import { NVerseEmailEncoder, NverseTenantDaoController } from 'bmx-nverse-ts';
+import TenantModel from '../orm/tenant-orm';
+import { Model } from 'sequelize';
+import UserRoleModel from '../orm/user-role-orm';
 
 export class TenantDaoController extends NverseTenantDaoController<Tenant> {
+	private _emailEncoder: NVerseEmailEncoder = new NVerseEmailEncoder(
+		process.env.NVERSE_AES_KEY || '',
+		process.env.NVERSE_AES_IV || ''
+	);
 
-	private _emailEncoder: NVerseEmailEncoder =
-		new NVerseEmailEncoder(process.env.NVERSE_AES_KEY || '', process.env.NVERSE_AES_IV || '');
-
-	public retrieveUserByEncryptedEmail = async (email: string): Promise<Tenant> => {
+	public retrieveUserByEncryptedEmail = async (
+		email: string
+	): Promise<Tenant> => {
 		try {
+			const existTenant: Model<any> | null = await TenantModel.findOne({
+				where: {
+					email: email,
+				},
+				include: [
+					{
+						model: UserRoleModel,
+						as: 'roles', //this should be the same as the name of the association
+					},
+				],
+			});
 
-			const existTenant: BmxQueryResponse<Tenant> = await TenantModel
-				.findOne({email: email})
-				.populate('roles')
-				.exec();
-
-			return <Tenant>existTenant;
-
+			if (!existTenant) {
+				return {} as Tenant;
+			}
+            
+			return existTenant.toJSON() as Tenant;
 		} catch (e: any) {
-			alfredLog.error(e.message, e.stack);
+			console.error(e.message, e.stack);
 			return {} as Tenant;
 		}
-	}
+	};
 
 	public retrieveUserByEmail = async (email: string): Promise<Tenant> => {
 		try {
+            const existTenant: Model<any> | null = await TenantModel.findOne({
+				where: {
+					email: this._emailEncoder.encode(email),
+				},
+				include: [
+					{
+						model: UserRoleModel,
+						as: 'roles', //this should be the same as the name of the association
+					},
+				],
+			});
 
-			const existTenant: BmxQueryResponse<Tenant> = await TenantModel
-				.findOne({email: this._emailEncoder.encode(email)})
-				.populate('roles')
-				.exec();
-
-			return <Tenant>existTenant;
-
+			if (!existTenant) {
+				return {} as Tenant;
+			}
+            
+			return existTenant.toJSON() as Tenant;
 		} catch (e: any) {
-			alfredLog.error(e.message, e.stack);
+			console.error(e.message, e.stack);
 			return {} as Tenant;
 		}
-	}
+	};
 }

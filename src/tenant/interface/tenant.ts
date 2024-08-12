@@ -4,6 +4,7 @@ import {USER_ROLE} from '../enum/user-role';
 import {NVerseTenant} from 'bmx-nverse-ts';
 
 export interface Tenant extends NVerseTenant<USER_ROLE, UserRole> {
+    id: number;
 	Uid: string;
 	name: string;
 	contactNumber: string;

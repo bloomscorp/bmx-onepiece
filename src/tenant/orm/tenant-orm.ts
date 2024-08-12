@@ -78,9 +78,11 @@ const TenantModel = sequelize.define(
 		},
 	},
 	{
+        underscored: true,
 		timestamps: true,
 		freezeTableName: true,
-		modelName: 'tenant',
+		tableName: 'tenant',
+        modelName: 'tenant',
 		getterMethods: {
 			_id() {
 				return this.getDataValue('id');

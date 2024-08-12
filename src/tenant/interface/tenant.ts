@@ -15,4 +15,6 @@ export interface Tenant extends NVerseTenant<USER_ROLE, UserRole> {
 	lastAccessTime: number;
 	profileImageUrl: string;
 	gender: GENDER;
+    createdAt: Date;
+    updatedAt: Date;
 }

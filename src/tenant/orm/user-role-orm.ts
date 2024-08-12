@@ -25,9 +25,11 @@ const UserRoleModel = sequelize.define(
 		},
 	},
 	{
+        underscored: true,
 		timestamps: true,
 		freezeTableName: true,
-		modelName: 'userRole',
+		tableName: 'user_role',
+        modelName: 'userRole',
 		getterMethods: {
 			_id() {
 				return this.getDataValue('id');
@@ -38,11 +40,11 @@ const UserRoleModel = sequelize.define(
 
 TenantModel.hasMany(UserRoleModel, {
     as: 'roles',
-	foreignKey: { name: 'tenantId', allowNull: false},
+	foreignKey: { name: 'tenant_id', allowNull: false},
 });
 UserRoleModel.belongsTo(TenantModel, {
     as: 'tenant',
-	foreignKey: { name: 'tenantId', allowNull: false },
+	foreignKey: { name: 'tenant_id', allowNull: false },
 });
 
 export default UserRoleModel;

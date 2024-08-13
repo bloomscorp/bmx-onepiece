@@ -10,7 +10,7 @@ const info = (message: string, dataDump?: any, endpoint?: string, createdBy?: nu
         endpoint: endpoint,
         createdBy: createdBy,
         message: message,
-        dataDump: dataDump
+        dataDump: JSON.stringify(dataDump, undefined, 4)
     });
 }
 
@@ -23,7 +23,7 @@ const error = (message: string, dataDump?: any, endpoint?: string, createdBy?: n
         endpoint: endpoint,
         createdBy: createdBy,
         message: message,
-        dataDump: dataDump
+        dataDump: JSON.stringify(dataDump, undefined, 4)
     });
 }
 

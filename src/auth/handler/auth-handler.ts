@@ -25,9 +25,10 @@ export class AuthHandler {
 			'loginHandler'
 		).then(data => {
             
+            //TODO: this log is only for post request where no sensitive information stored.
             alfredLog.info(
                 'loginHandler',
-                JSON.stringify(req.body) || null,
+                req.body || null,
                 req.originalUrl,
                 (req as any)?.tenant?.id || null
             );

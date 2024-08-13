@@ -1,7 +1,7 @@
 import express, {Express, Request, Response} from 'express';
 import cors from 'cors';
 import authRoutes from './src/auth/auth.route';
-import {Raintree} from 'bmx-raintree-ts';
+import {Raintree} from './src/raintree/raintree';
 
 const app: Express = express();
 

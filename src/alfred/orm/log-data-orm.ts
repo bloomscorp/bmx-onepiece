@@ -15,6 +15,10 @@ const LogDataModel = sequelize.define(
 			type: DataTypes.ENUM(...Object.values(LOG_TYPE)),
 			allowNull: false,
 		},
+        endpoint: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
 		message: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -25,7 +29,7 @@ const LogDataModel = sequelize.define(
 		},
 		createdBy: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
+			allowNull: true,
 			references: {
 				model: TenantModel,
 				key: 'id',

@@ -18,7 +18,7 @@ const Raintree = (result: RaintreeResponse, req: any, res: any, next: any): void
             alfredLog.info(
                 result.message,
                 null,
-                req.route?.path || '',
+                req.originalUrl,
                 req?.tenant?.id || null
             );
             response(result, res);
@@ -27,7 +27,7 @@ const Raintree = (result: RaintreeResponse, req: any, res: any, next: any): void
                 alfredLog.error(
                     result.message,
                     result?.stack,
-                    req.route?.path || '',
+                    req.originalUrl,
                     req?.tenant?.id || null
                 );
                 res.status(500).send({
@@ -38,7 +38,7 @@ const Raintree = (result: RaintreeResponse, req: any, res: any, next: any): void
                 alfredLog.error(
                     RaintreeMessage.SERVER_FAILURE,
                     result?.stack,
-                    req.route?.path || '',
+                    req.originalUrl,
                     req?.tenant?.id || null
                 );
                 res.status(500).send({

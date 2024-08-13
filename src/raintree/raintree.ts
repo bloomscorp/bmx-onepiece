@@ -19,27 +19,16 @@ const Raintree = (result: RaintreeResponse, req: any, res: any, next: any): void
                 result.message,
                 null,
                 req.route?.path || '',
-                req.tenant.id || null
+                req?.tenant?.id || null
             );
             response(result, res);
         } else {
-            if (result.stack) {
-                alfredLog.error(
-                    result.message,
-                    result.stack,
-                    req.route?.path || '',
-                    req.tenant.id || null
-                );
-            } else if (result.success) {
-                result.actionCode = RaintreeActionCode.NO_ACTION;
-            }
-
             if (result.message) {
                 alfredLog.error(
                     result.message,
-                    null,
+                    result?.stack,
                     req.route?.path || '',
-                    req.tenant.id || null
+                    req?.tenant?.id || null
                 );
                 res.status(500).send({
                     success: false,
@@ -47,10 +36,10 @@ const Raintree = (result: RaintreeResponse, req: any, res: any, next: any): void
                 });
             } else {
                 alfredLog.error(
-                    result.message,
-                    null,
+                    RaintreeMessage.SERVER_FAILURE,
+                    result?.stack,
                     req.route?.path || '',
-                    req.tenant.id || null
+                    req?.tenant?.id || null
                 );
                 res.status(500).send({
                     success: false,

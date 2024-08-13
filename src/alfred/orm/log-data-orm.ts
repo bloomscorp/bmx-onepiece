@@ -24,7 +24,7 @@ const LogDataModel = sequelize.define(
 			allowNull: false,
 		},
 		dataDump: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT,
 			allowNull: true,
 		},
 		createdBy: {

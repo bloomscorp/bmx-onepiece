@@ -4,6 +4,7 @@ export interface LogData {
     id: number;
     logType: LOG_TYPE;
     message: string;
+    endpoint?: string;
     dataDump?: string;
     createdBy: number;
     createdAt: Date;

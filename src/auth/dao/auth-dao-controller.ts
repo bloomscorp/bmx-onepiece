@@ -38,7 +38,7 @@ export class AuthDAOController {
             return this._response
                 .prepareActionResponse(RaintreeActionCode.INCORRECT_INFORMATION);
         }
-
+        
         return {
             actionCode: RaintreeActionCode.FETCH_SUCCESS,
             success: true,

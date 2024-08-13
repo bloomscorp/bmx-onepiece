@@ -8,8 +8,9 @@ const response = (result: RaintreeResponse, res: any): void => {
     delete result.actionCode;
     if (result.jwt) {
         res.status(status).send({jwt: result.jwt});
+    } else {
+        res.status(status).send(result);
     }
-    res.status(status).send(result);
 };
 
 const Raintree = (result: RaintreeResponse, req: any, res: any, next: any): void => {

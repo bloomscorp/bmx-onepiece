@@ -40,11 +40,11 @@ const UserRoleModel = sequelize.define(
 
 TenantModel.hasMany(UserRoleModel, {
     as: 'roles',
-	foreignKey: { name: 'tenant_id', allowNull: false},
+	foreignKey: { name: 'tenantId', allowNull: false},
 });
 UserRoleModel.belongsTo(TenantModel, {
     as: 'tenant',
-	foreignKey: { name: 'tenant_id', allowNull: false },
+	foreignKey: { name: 'tenantId', allowNull: false },
 });
 
 export default UserRoleModel;

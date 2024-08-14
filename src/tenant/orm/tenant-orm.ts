@@ -16,6 +16,13 @@ const TenantModel = sequelize.define(
 			primaryKey: true,
 			autoIncrement: true,
 		},
+		_id: {
+			type: DataTypes.VIRTUAL,
+			allowNull: true,
+			get() {
+				return this.getDataValue('id').toString();
+			},
+		},
 		email: {
 			type: DataTypes.STRING,
 			unique: true,
@@ -83,11 +90,11 @@ const TenantModel = sequelize.define(
 		freezeTableName: true,
 		tableName: 'tenant',
         modelName: 'tenant',
-		getterMethods: {
-			_id() {
-				return this.getDataValue('id');
-			},
-		},
+		// getterMethods: {
+		// 	_id() {
+		// 		return this.getDataValue('id');
+		// 	},
+		// },
 		indexes: [
 			{
 				fields: ['name'],
